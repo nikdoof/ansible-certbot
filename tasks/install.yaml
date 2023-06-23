@@ -1,0 +1,35 @@
+---
+- name: Install certbot
+  ansible.builtin.package:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - certbot
+
+- name: Install DigitalOcean certbot extension
+  ansible.builtin.package:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - python3-certbot-dns-digitalocean
+  when:
+    - certbot_digitalocean_token is defined
+
+- name: Install GoDaddy certbot extension from PyPi
+  ansible.builtin.pip:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - certbot-dns-godaddy
+  when:
+    - certbot_godaddy_key is defined
+    - certbot_godaddy_secret is defined
+
+- name: Enable certbot renewal timer
+  ansible.builtin.systemd:
+    name: certbot.timer
+    state: started
+    enabled: true

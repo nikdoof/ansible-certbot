@@ -1,0 +1,11 @@
+---
+- name: Install Certbot
+  ansible.builtin.import_tasks: install.yaml
+
+- name: Configure Certbot
+  ansible.builtin.import_tasks: config.yaml
+
+- name: Request Certificates
+  ansible.builtin.import_tasks: request_certs.yaml
+  tags:
+    - request_certs

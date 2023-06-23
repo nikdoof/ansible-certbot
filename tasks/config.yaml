@@ -1,0 +1,21 @@
+---
+- name: Write out DigitalOcean auth key
+  ansible.builtin.template:
+    src: do_secrets.j2
+    dest: /root/do_secrets.ini
+    mode: "0600"
+    owner: root
+    group: root
+  when:
+    - certbot_digitalocean_token is defined
+
+- name: Write out GoDaddy auth key
+  ansible.builtin.template:
+    src: do_secrets.j2
+    dest: /root/gd_secrets.ini
+    mode: "0600"
+    owner: root
+    group: root
+  when:
+    - certbot_godaddy_secret is defined
+    - certbot_godaddy_key is defined

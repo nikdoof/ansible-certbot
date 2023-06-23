@@ -1,0 +1,37 @@
+---
+- name: When on EL 8
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version != '9'
+  block:
+    - name: Install certbot
+      ansible.builtin.package:
+        name: "{{ certbot_el_packages }}"
+        state: present
+      vars:
+        certbot_el_packages:
+          - certbot
+          - python3-certbot-dns-digitalocean
+
+- name: When on EL 9
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version == '9'
+  block:
+    - name: Install certbot
+      ansible.builtin.package:
+        name: "{{ certbot_el9_packages }}"
+        state: present
+      vars:
+        certbot_el9_packages:
+          - certbot
+    - name: Install certbot-dns-digitalocean from pip
+      ansible.builtin.pip:
+        name: certbot-dns-digitalocean
+        state: present
+
+- name: Enable certbot renewal timer
+  ansible.builtin.systemd:
+    name: certbot-renew.timer
+    state: started
+    enabled: true

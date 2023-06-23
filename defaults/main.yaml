@@ -1,0 +1,8 @@
+---
+certbot_certs: []
+certbot_certs_email: root@{{ ansible_inventory }}
+
+certbot_plugin_arguments:
+  digitalocean: --dns-digitalocean --dns-digitalocean-credentials /root/do_secrets.ini
+  godaddy: --authenticator dns-godaddy --dns-godaddy-credentials /root/gd_secrets.ini
+  default: "--webroot -w /var/www/acme-challenge"

@@ -1,0 +1,9 @@
+---
+- name: Add FQDN if not already listed in certs
+  ansible.builtin.set_fact:
+    certbot_certs: "{{ certbot_certs + [{'hostname': ansible_fqdn}] }}"
+  when: certbot_certs | selectattr('hostname', 'equalto', ansible_fqdn) | list | length == 0
+
+- name: Request Certificate
+  ansible.builtin.include_tasks: cert.yaml
+  loop: "{{ certbot_certs }}"

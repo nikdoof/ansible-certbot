@@ -1,0 +1,10 @@
+---
+certbot_packages:
+  - certbot
+
+certbot_extension_packages: []
+
+certbot_extension_pypi_packages:
+  - certbot-dns-digitalocean
+
+certbot_timer_service: certbot-renew.timer

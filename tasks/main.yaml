@@ -1,4 +1,10 @@
 ---
+- name: Get OS specific vars
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "os/{{ ansible_os_family }}/{{ ansible_distribution_major_version }}.yaml"
+    - "os/{{ ansible_os_family }}.yaml"
+
 - name: Install Certbot
   ansible.builtin.import_tasks: install.yaml
 

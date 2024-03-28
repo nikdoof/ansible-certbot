@@ -6,3 +6,13 @@ certbot_plugin_arguments:
   digitalocean: --dns-digitalocean --dns-digitalocean-credentials /root/do_secrets.ini
   godaddy: --authenticator dns-godaddy --dns-godaddy-credentials /root/gd_secrets.ini
   default: "--webroot -w /var/www/acme-challenge"
+
+certbot_packages:
+  - certbot
+
+certbot_extension_packages:
+  - python3-certbot-dns-digitalocean
+
+certbot_extension_pypi_packages: []
+
+certbot_timer_service: certbot.timer

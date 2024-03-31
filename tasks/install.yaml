@@ -1,20 +1,20 @@
 ---
-- name: Install certbot
+- name: Certbot - Install certbot
   ansible.builtin.package:
     name: "{{ certbot_packages }}"
     state: present
 
-- name: Install certbot extensions (package manager)
+- name: Certbot - Install certbot extensions (package manager)
   ansible.builtin.package:
     name: "{{ certbot_extension_packages }}"
     state: present
 
-- name: Install certbot extensions (pypi)
+- name: Certbot - Install certbot extensions (pypi)
   ansible.builtin.pip:
     name: "{{ certbot_extension_pypi_packages }}"
     state: present
 
-- name: Enable certbot renewal timer
+- name: Certbot - Enable certbot renewal timer
   ansible.builtin.systemd:
     name: "{{ certbot_timer_service }}"
     state: started

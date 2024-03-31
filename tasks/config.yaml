@@ -1,11 +1,12 @@
 ---
-- name: Write out DigitalOcean auth key
-  ansible.builtin.template:
-    src: do_secrets.j2
+- name: Certbot - Write out DigitalOcean auth key
+  ansible.builtin.copy:
     dest: /root/do_secrets.ini
     mode: "0600"
     owner: root
     group: root
+    content: |
+      dns_digitalocean_token = {{ certbot_digitalocean_token }}
   when:
     - certbot_digitalocean_token is defined
 

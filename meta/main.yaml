@@ -1,15 +1,27 @@
 ---
-allow_duplicates: false
+dependencies: []
 
 galaxy_info:
   role_name: certbot
-  author: Andrew Williams
-  description: Basic installation for Certbot
+  author: nikdoof
+  description: Install Certbot and request ACME certificates
   license: MIT
-
-  min_ansible_version: "2.4"
-
+  min_ansible_version: "2.10"
   platforms:
+    - name: EL
+      versions:
+        - 8
+        - 9
     - name: Ubuntu
       versions:
         - jammy
+  galaxy_tags:
+    - networking
+    - system
+    - web
+    - certbot
+    - letsencrypt
+    - encryption
+    - certificates
+    - ssl
+    - https

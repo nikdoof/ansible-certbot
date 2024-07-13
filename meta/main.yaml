@@ -15,6 +15,9 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - jammy
+    - name: Debian
+      versions:
+        - bookworm
   galaxy_tags:
     - networking
     - system

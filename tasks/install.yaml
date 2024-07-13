@@ -8,14 +8,19 @@
   ansible.builtin.package:
     name: "{{ certbot_extension_packages }}"
     state: present
+  when: 
+    - certbot_extension_packages | length
 
 - name: Certbot - Install certbot extensions (pypi)
   ansible.builtin.pip:
     name: "{{ certbot_extension_pypi_packages }}"
     state: present
+  when: 
+    - certbot_extension_pypi_packages | length
 
 - name: Certbot - Enable certbot renewal timer
   ansible.builtin.systemd:
     name: "{{ certbot_timer_service }}"
     state: started
     enabled: true
+  when: certbot_timer_service

@@ -1,6 +1,7 @@
 ---
 certbot_certs: []
 certbot_certs_email: root@{{ ansible_inventory }}
+certbot_request_fqdn_cert: true
 
 certbot_plugin_arguments:
   digitalocean: --dns-digitalocean --dns-digitalocean-credentials /root/do_secrets.ini

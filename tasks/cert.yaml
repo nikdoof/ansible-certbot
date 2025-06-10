@@ -15,6 +15,6 @@
     cert_sans: "{{ ['DNS:'] | product(item.sans | default([item.hostname])) | map('join') | list }}"
 
 - name: Certbot - Request a certificate  # noqa no-changed-when ignore-errors
-  ansible.builtin.command: "certbot certonly -n --expand --agree-tos {{ certbot_plugin_arguments[item.plugin | default('default')] }} -d '{{ item.hostname }}' {% for san in item.sans | default([]) %} -d '{{ san }}' {% endfor %} -m {{ certbot_certs_email }} --key-type {{ item.key_type | default('ecdsa')}}"  # noqa no-change-when
+  ansible.builtin.command: "certbot certonly -n --expand --agree-tos {{ certbot_plugin_arguments[item.plugin | default('default')] }} -d '{{ item.hostname }}' {% for san in item.sans | default([]) %} -d '{{ san }}' {% endfor %} -m {{ certbot_certs_email }}{% if item.key_type %} --key-type {{ item.key_type }}{% endif %}"  # noqa no-change-when
   ignore_errors: true
   when: not cert_stat.stat.exists or cert_sans | difference(cert_info.subject_alt_name) | list | length > 0

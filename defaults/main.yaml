@@ -6,6 +6,7 @@ certbot_request_fqdn_cert: true
 certbot_plugin_arguments:
   digitalocean: --dns-digitalocean --dns-digitalocean-credentials /root/do_secrets.ini
   godaddy: --authenticator dns-godaddy --dns-godaddy-credentials /root/gd_secrets.ini
+  route53: --dns-route53
   default: "--webroot -w /var/www/acme-challenge"
 
 certbot_packages:
@@ -13,6 +14,7 @@ certbot_packages:
 
 certbot_extension_packages:
   - python3-certbot-dns-digitalocean
+  - python3-certbot-dns-route53
 
 certbot_extension_pypi_packages: []
 

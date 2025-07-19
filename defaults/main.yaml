@@ -12,10 +12,7 @@ certbot_plugin_arguments:
 certbot_packages:
   - certbot
 
-certbot_extension_packages:
-  - python3-certbot-dns-digitalocean
-  - python3-certbot-dns-route53
-
-certbot_extension_pypi_packages: []
+certbot_plugins_source: pypi
+certbot_plugins_package_prefix: certbot-dns-
 
 certbot_timer_service: certbot.timer

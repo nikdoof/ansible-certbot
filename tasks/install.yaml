@@ -4,19 +4,27 @@
     name: "{{ certbot_packages }}"
     state: present
 
-- name: Certbot - Install certbot extensions (package manager)
-  ansible.builtin.package:
-    name: "{{ certbot_extension_packages }}"
-    state: present
-  when: 
-    - certbot_extension_packages | length
+- name: Certbot - Build plugin list
+  set_fact:
+    _certbot_plugins_used: "{{ certbot_certs | map(attribute='plugin') | list | unique | map('format', certbot_plugins_package_prefix + '%s') | list }}"
 
-- name: Certbot - Install certbot extensions (pypi)
-  ansible.builtin.pip:
-    name: "{{ certbot_extension_pypi_packages }}"
-    state: present
-  when: 
-    - certbot_extension_pypi_packages | length
+- name: Certbot - Install extension packages
+  when:
+    - _certbot_plugins_used | length > 0
+  block:
+  - name: Certbot - Install certbot extensions (package manager)
+    ansible.builtin.package:
+      name: "{{ _certbot_plugins_used }}"
+      state: present
+    when:
+      - certbot_plugins_source == 'package_manager'
+
+  - name: Certbot - Install certbot extensions (pypi)
+    ansible.builtin.pip:
+      name: "{{ _certbot_plugins_used }}"
+      state: present
+    when:
+      - certbot_plugins_source == 'pypi'
 
 - name: Certbot - Enable certbot renewal timer
   ansible.builtin.systemd:

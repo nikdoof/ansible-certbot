@@ -1,3 +1,6 @@
 ---
 certbot_packages:
   - python3-certbot
+
+certbot_plugins_source: package_manager
+certbot_plugins_package_prefix: python3-certbot-dns-

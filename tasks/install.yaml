@@ -6,7 +6,11 @@
 
 - name: Certbot - Build plugin list
   set_fact:
-    _certbot_plugins_used: "{{ certbot_certs | map(attribute='plugin') | list | unique | map('format', certbot_plugins_package_prefix + '%s') | list }}"
+    _certbot_plugins_used: "{{ certbot_certs | map(attribute='plugin') | list | unique }}"
+
+- name: Certbot - Map plugin names to package names
+  set_fact:
+    _certbot_plugins_used: "{{ [certbot_plugins_package_prefix] | product(_certbot_plugins_used) | map('join') | list }}"
 
 - name: Certbot - Install extension packages
   when:
@@ -31,4 +35,4 @@
     name: "{{ certbot_timer_service }}"
     state: started
     enabled: true
-  when: certbot_timer_service
+  when: certbot_timer_service is defined
